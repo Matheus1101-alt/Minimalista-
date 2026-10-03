@@ -24,17 +24,19 @@ export const K = {
 	alerta: 4.09, // "preste atenção"
 	colica: 5.32, // "Isso pode não ser apenas uma cólica"
 	obraUtero: 8.12, // "A endometriose é uma doença"
-	utero: 10.28, // "um tecido semelhante ao endométrio"
+	obraHisto: 10.28, // "um tecido semelhante ao endométrio"
 	fora: 12.39, // "cresce fora do útero"
-	inflama: 13.96, // "podendo provocar inflamação e dor"
+	obraLapa: 13.96, // "podendo provocar inflamação e dor"
 	sinais: 16.3, // "e os sinais podem ir muito além"
 	ciclo: 19.4, // "Dor intensa durante a menstruação"
 	relacoes: 21.71, // "dor nas relações sexuais"
 	obraPelve: 23.51, // "dor para evacuar ou urinar"
 	ovulo: 27.11, // "e até dificuldade para engravidar"
+	obraUS: 29.04, // "podem estar relacionados à doença"
 	atencao: 31.72, // "Mas atenção"
 	duvida: 32.81, // "esses sintomas não significam, sozinhos..."
 	lupa: 37.36, // "O diagnóstico precisa ser feito..."
+	obraDiag: 39.2, // "por um profissional de saúde"
 	corpo: 41.12, // "Seu corpo"
 	grito: 42.64, // "precisar gritar"
 	ouvido: 43.97, // "para ser ouvido"
@@ -51,10 +53,10 @@ const CAMERAS: {t: number; c: Cam; d?: number}[] = [
 	{t: K.alerta, c: {yaw: 0, pitch: 0, dist: 1500, x: 0, y: 0}, d: 0.6},
 	{t: K.colica, c: {yaw: -0.4, pitch: 0.35, dist: 1450, x: 0, y: 0}, d: 0.9},
 	{t: K.colica + 0.9, c: {yaw: 0.4, pitch: 0.2, dist: 1350, x: 0, y: 0}, d: 1.8}, // órbita no nó
-	{t: K.utero, c: {yaw: 0, pitch: 0, dist: 1500, x: 0, y: 0}, d: 0.8},
-	{t: K.utero + 0.8, c: {yaw: 0.25, pitch: 0.1, dist: 1300, x: 0, y: -40}, d: 1.6},
+	{t: K.obraHisto, c: {yaw: 0, pitch: 0, dist: 1500, x: 0, y: 0}, d: 0.8},
+	{t: K.obraHisto + 0.8, c: {yaw: 0.25, pitch: 0.1, dist: 1300, x: 0, y: -40}, d: 1.6},
 	{t: K.fora, c: {yaw: -0.3, pitch: 0.25, dist: 1650, x: 0, y: 0}, d: 1.0}, // recua: o tecido escapa
-	{t: K.inflama, c: {yaw: 0.2, pitch: 0.15, dist: 1350, x: 0, y: 0}, d: 1.6},
+	{t: K.obraLapa, c: {yaw: 0.2, pitch: 0.15, dist: 1350, x: 0, y: 0}, d: 1.6},
 	{t: K.sinais, c: {yaw: 0, pitch: 0.9, dist: 1750, x: 0, y: 0}, d: 1.2}, // vista de cima: além da cólica
 	{t: K.ciclo, c: {yaw: 0, pitch: 0.12, dist: 1450, x: 0, y: 0}, d: 0.9},
 	{t: K.relacoes, c: {yaw: 0.5, pitch: 0.2, dist: 1400, x: 0, y: 0}, d: 1.2},
@@ -368,18 +370,19 @@ const CHAVES: {t: number; f: string; dur: number; spread: number}[] = [
 	{t: K.pulso, f: 'pulso', dur: 0.6, spread: 0.25},
 	{t: K.alerta, f: 'alerta', dur: 0.4, spread: 0.2},
 	{t: K.colica, f: 'colica', dur: 0.7, spread: 0.3},
-	{t: K.obraUtero - 0.2, f: 'vazio', dur: 0.5, spread: 0.2},
-	{t: K.utero - 0.2, f: 'endometrio', dur: 0.7, spread: 0.3},
-	{t: K.fora, f: 'fora', dur: 0.9, spread: 0.4},
-	{t: K.inflama, f: 'inflama', dur: 0.4, spread: 0.1},
+	{t: K.obraUtero - 0.2, f: 'vazio', dur: 0.5, spread: 0.2}, // obras: útero (Gray) → histologia
+	{t: K.fora - 0.4, f: 'fora', dur: 0.5, spread: 0.2}, // o tecido escapa do útero
+	{t: K.obraLapa - 0.2, f: 'vazio', dur: 0.5, spread: 0.2}, // obra: laparoscopia
 	{t: K.sinais, f: 'sinais', dur: 0.8, spread: 0.3},
 	{t: K.ciclo, f: 'ciclo', dur: 0.5, spread: 0.3},
 	{t: K.relacoes, f: 'relacoes', dur: 0.7, spread: 0.3},
-	{t: K.obraPelve - 0.2, f: 'vazio', dur: 0.5, spread: 0.2},
+	{t: K.obraPelve - 0.2, f: 'vazio', dur: 0.5, spread: 0.2}, // obra: pelve
 	{t: K.ovulo - 0.1, f: 'ovulo', dur: 0.8, spread: 0.3},
+	{t: K.obraUS - 0.2, f: 'vazio', dur: 0.4, spread: 0.2}, // obra: ultrassom
 	{t: K.atencao, f: 'exclama', dur: 0.4, spread: 0.15},
 	{t: K.duvida, f: 'duvida', dur: 0.7, spread: 0.25},
 	{t: K.lupa, f: 'lupa', dur: 0.8, spread: 0.3},
+	{t: K.obraDiag - 0.2, f: 'vazio', dur: 0.4, spread: 0.2}, // obra: diagrama
 	{t: K.corpo, f: 'utero', dur: 0.7, spread: 0.3},
 	{t: K.grito, f: 'grito', dur: 0.5, spread: 0.2},
 	{t: K.ouvido, f: 'ouvido', dur: 0.8, spread: 0.3},
